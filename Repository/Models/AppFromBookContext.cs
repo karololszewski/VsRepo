@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Repository.IRepo;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Web;
 
 namespace Repository.Models
 {
-    public class AppFromBookContext : IdentityDbContext
+    public class AppFromBookContext : IdentityDbContext, IAppFromBookContext
     {
         public AppFromBookContext() : base("AppFromBook")
         {
