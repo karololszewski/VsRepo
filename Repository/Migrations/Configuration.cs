@@ -22,6 +22,7 @@ namespace Repository.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            //if (System.Diagnostics.Debugger.IsAttached == false) System.Diagnostics.Debugger.Launch();
             SeedRoles(context);
             SeedUsers(context);
             SeedAnnouncement(context);
@@ -44,9 +45,9 @@ namespace Repository.Migrations
         {
             var store = new UserStore<User>(context);
             var manager = new UserManager<User>(store);
-            if (!context.User.Any(u => u.UserName == "Admin"))
+            if (!context.Users.Any(u => u.UserName == "Admin"))
             {
-                var user = new User() { UserName = "Admin" };
+                var user = new User() { UserName = "Admin"};
                 var adminResult = manager.Create(user, "12345678");
 
                 if (adminResult.Succeeded) manager.AddToRole(user.Id, "Admin");
@@ -98,7 +99,7 @@ namespace Repository.Migrations
                 {
                     Id = i,
                     AnnouncementId = i / 2 + 1,
-                    CategoryId = i / 2 + 1
+                    CategoryId = i / 2 + 2
                 };
                 context.Set<AnnouncementCategory>().AddOrUpdate(announcementCategory);
             }

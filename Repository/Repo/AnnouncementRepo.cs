@@ -17,19 +17,11 @@ namespace Repository.Repo
             _db = db;
         }
 
-        public bool DeleteAnnouncement(int id)
+        public void DeleteAnnouncement(int id)
         {
+            DeleteLinkedAnnouncementCategories(id);
             Announcement announcement = GetAnnouncementById(id);
             _db.Announcements.Remove(announcement);
-            try
-            {
-                _db.SaveChanges();
-                return true;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
         }
 
         public Announcement GetAnnouncementById(int id)
@@ -42,5 +34,20 @@ namespace Repository.Repo
             _db.Database.Log = message => Trace.WriteLine(message);
             return _db.Announcements.AsNoTracking();
         }
+
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
+        }
+
+        private void DeleteLinkedAnnouncementCategories(int idAnnouncement)
+        {
+            var list = _db.AnnouncementCategories.Where(o => o.AnnouncementId == idAnnouncement);
+            foreach (var item in list)
+            {
+                _db.AnnouncementCategories.Remove(item);
+            }
+        }
+
     }
 }

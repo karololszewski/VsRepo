@@ -101,7 +101,7 @@ namespace AppFromBook.Controllers
         //}
 
         // GET: Announcements/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? error)
         {
             if (id == null)
             {
@@ -112,6 +112,10 @@ namespace AppFromBook.Controllers
             {
                 return HttpNotFound();
             }
+            if (error != null)
+            {
+                ViewBag.Error = true;
+            }
             return View(announcement);
         }
 
@@ -120,14 +124,15 @@ namespace AppFromBook.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            for (int i = 0; i < 3; i++)
-            {   
-                if (_repo.DeleteAnnouncement((int)id))
-                {
-                    break;
-                }
+            _repo.DeleteAnnouncement((int)id);
+            try
+            {
+                _repo.SaveChanges();
             }
-            
+            catch
+            {
+                return RedirectToAction("Delete", new { id = id, blad = true });
+            }
             return RedirectToAction("Index");
         }
 

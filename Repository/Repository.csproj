@@ -131,6 +131,10 @@
     <Compile Include="Migrations\201711081749340_Start.Designer.cs">
       <DependentUpon>201711081749340_Start.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802271827398_1.cs" />
+    <Compile Include="Migrations\201802271827398_1.Designer.cs">
+      <DependentUpon>201802271827398_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\AnnouncementCategory.cs" />
@@ -143,6 +147,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201711081749340_Start.resx">
       <DependentUpon>201711081749340_Start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802271827398_1.resx">
+      <DependentUpon>201802271827398_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

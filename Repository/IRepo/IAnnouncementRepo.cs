@@ -11,6 +11,8 @@ namespace Repository.IRepo
     {
         IQueryable<Announcement> GetAnnouncements();
         Announcement GetAnnouncementById(int id);
-        bool DeleteAnnouncement(int id);
+        void DeleteAnnouncement(int id);
+
+        void SaveChanges();
     }
 }
