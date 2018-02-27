@@ -1,7 +1,9 @@
 ﻿@model Repository.Models.Announcement
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Usuń ogłoszenie nr" + Model.Id;
+    ViewBag.Description = "Usuń ogłoszenie nr" + Model.Id + " Opis do Googla";
+    ViewBag.KeyWords = "Ogłoszenie, " + Model.Id + ", usuń";
 }
 
 <h2>Delete</h2>
@@ -49,8 +51,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning"})
         </div>
     }
 </div>

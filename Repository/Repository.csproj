@@ -125,8 +125,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="IRepo\IAnnouncementRepo.cs" />
     <Compile Include="IRepo\IAppFromBookContext.cs" />
     <Compile Include="Migrations\201711081749340_Start.cs" />

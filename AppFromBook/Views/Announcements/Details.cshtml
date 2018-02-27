@@ -1,7 +1,9 @@
 ﻿@model Repository.Models.Announcement
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły ogłoszenia nr" + Model.Id;
+    ViewBag.Description = "Szczegóły ogłoszenia nr" + Model.Id + " Opis do Googla";
+    ViewBag.KeyWords = "Ogłoszenie, " + Model.Id + ", szczegóły";
 }
 
 <h2>Details</h2>
@@ -45,6 +47,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning"})
 </p>

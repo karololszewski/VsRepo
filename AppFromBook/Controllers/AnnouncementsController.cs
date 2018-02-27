@@ -27,20 +27,20 @@ namespace AppFromBook.Controllers
             return View(_repo.GetAnnouncements());
         }
 
-        //// GET: Announcements/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Announcement announcement = db.Announcements.Find(id);
-        //    if (announcement == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(announcement);
-        //}
+        // GET: Announcements/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Announcement announcement = _repo.GetAnnouncementById((int)id);
+            if (announcement == null)
+            {
+                return HttpNotFound();
+            }
+            return View(announcement);
+        }
 
         //// GET: Announcements/Create
         //public ActionResult Create()
@@ -100,31 +100,36 @@ namespace AppFromBook.Controllers
         //    return View(announcement);
         //}
 
-        //// GET: Announcements/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Announcement announcement = db.Announcements.Find(id);
-        //    if (announcement == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(announcement);
-        //}
+        // GET: Announcements/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Announcement announcement = _repo.GetAnnouncementById((int)id);
+            if (announcement == null)
+            {
+                return HttpNotFound();
+            }
+            return View(announcement);
+        }
 
-        //// POST: Announcements/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Announcement announcement = db.Announcements.Find(id);
-        //    db.Announcements.Remove(announcement);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        // POST: Announcements/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            for (int i = 0; i < 3; i++)
+            {   
+                if (_repo.DeleteAnnouncement((int)id))
+                {
+                    break;
+                }
+            }
+            
+            return RedirectToAction("Index");
+        }
 
         //protected override void Dispose(bool disposing)
         //{

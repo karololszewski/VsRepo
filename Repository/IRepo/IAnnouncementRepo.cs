@@ -9,6 +9,8 @@ namespace Repository.IRepo
 {
     public interface IAnnouncementRepo
     {
-         IQueryable<Announcement> GetAnnouncements();
+        IQueryable<Announcement> GetAnnouncements();
+        Announcement GetAnnouncementById(int id);
+        bool DeleteAnnouncement(int id);
     }
 }
