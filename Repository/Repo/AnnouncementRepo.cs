@@ -2,6 +2,7 @@
 using Repository.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,11 @@ namespace Repository.Repo
         public AnnouncementRepo(IAppFromBookContext db)
         {
             _db = db;
+        }
+
+        public void Add(Announcement announcement)
+        {
+            _db.Announcements.Add(announcement);
         }
 
         public void DeleteAnnouncement(int id)
@@ -38,6 +44,11 @@ namespace Repository.Repo
         public void SaveChanges()
         {
             _db.SaveChanges();
+        }
+
+        public void UpdateAnnouncement(Announcement announcement)
+        {
+            _db.Entry(announcement).State = EntityState.Modified;
         }
 
         private void DeleteLinkedAnnouncementCategories(int idAnnouncement)

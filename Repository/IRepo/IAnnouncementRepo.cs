@@ -14,5 +14,7 @@ namespace Repository.IRepo
         void DeleteAnnouncement(int id);
 
         void SaveChanges();
+        void Add(Announcement announcement);
+        void UpdateAnnouncement(Announcement announcement);
     }
 }

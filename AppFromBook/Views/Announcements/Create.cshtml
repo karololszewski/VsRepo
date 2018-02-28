@@ -1,7 +1,9 @@
 ﻿@model Repository.Models.Announcement
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Dodaj ogłoszenie";
+    ViewBag.Description = "Dodaj ogłoszenie - Opis do Googla";
+    ViewBag.KeyWords = "Ogłoszenie, dodaj";
 }
 
 <h2>Create</h2>
@@ -32,22 +34,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DateAdd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateAdd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateAdd, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -56,7 +42,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning"})
 </div>
 
 @section Scripts {

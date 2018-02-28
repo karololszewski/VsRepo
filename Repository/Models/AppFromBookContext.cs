@@ -3,6 +3,7 @@ using Repository.IRepo;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
@@ -39,6 +40,6 @@ namespace Repository.Models
             //uzywa sie Fluent API, aby ustalic powiazanie pomiedzy tabelami i wlaczyc CascadeDelete dla tego powiazania
             modelBuilder.Entity<Announcement>().HasRequired(x => x.User).WithMany(x => x.Announcement).HasForeignKey(x => x.UserId).WillCascadeOnDelete(true);
         }
-
+        
     }
 }

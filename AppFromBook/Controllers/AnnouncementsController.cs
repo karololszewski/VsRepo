@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Repository.Models;
 using System.Diagnostics;
 using Repository.IRepo;
+using Microsoft.AspNet.Identity;
 
 namespace AppFromBook.Controllers
 {
@@ -42,63 +43,75 @@ namespace AppFromBook.Controllers
             return View(announcement);
         }
 
-        //// GET: Announcements/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
-        //    return View();
-        //}
+        // GET: Announcements/Create
+        [Authorize]
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Announcements/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,Text,Title,DateAdd,UserId")] Announcement announcement)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Announcements.Add(announcement);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        // POST: Announcements/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Text,Title")] Announcement announcement)
+        {
+            if (ModelState.IsValid)
+            {
+                announcement.UserId = User.Identity.GetUserId();
+                announcement.DateAdd = DateTime.Now;
+                try
+                {
+                    _repo.Add(announcement);
+                    _repo.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View(announcement);
+                }
+            }
+            return View(announcement);
+        }
 
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email", announcement.UserId);
-        //    return View(announcement);
-        //}
+        // GET: Announcements/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Announcement announcement = _repo.GetAnnouncementById((int)id);
+            if (announcement == null)
+            {
+                return HttpNotFound();
+            }
+            return View(announcement);
+        }
 
-        //// GET: Announcements/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Announcement announcement = db.Announcements.Find(id);
-        //    if (announcement == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email", announcement.UserId);
-        //    return View(announcement);
-        //}
-
-        //// POST: Announcements/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Text,Title,DateAdd,UserId")] Announcement announcement)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(announcement).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.UserId = new SelectList(db.Users, "Id", "Email", announcement.UserId);
-        //    return View(announcement);
-        //}
+        // POST: Announcements/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Text,Title,DateAdd,UserId")] Announcement announcement)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _repo.UpdateAnnouncement(announcement);
+                    _repo.SaveChanges();
+                }
+                catch
+                {
+                    return View(announcement);
+                }
+            }
+            return View(announcement);
+        }
 
         // GET: Announcements/Delete/5
         public ActionResult Delete(int? id, bool? error)
@@ -134,6 +147,12 @@ namespace AppFromBook.Controllers
                 return RedirectToAction("Delete", new { id = id, blad = true });
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Partial()
+        {
+            var announcement = _repo.GetAnnouncements();
+            return PartialView("Index", announcement);
         }
 
         //protected override void Dispose(bool disposing)
